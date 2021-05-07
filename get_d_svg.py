@@ -12,12 +12,13 @@ def main():
 
     soup = bs.BeautifulSoup(source, 'xml')
 
+    # This doesnt have support for multiple d or paths
     path = soup.find('path')
 
-    # TODO: Add support for multiple paths
-    if path is list:
-        path = path[0]
+    ctrl_points = path.get('d')
+
+    return ctrl_points
 
 
 if __name__ == "__main__":
-    main()
+    print(main())

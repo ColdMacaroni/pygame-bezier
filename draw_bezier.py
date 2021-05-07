@@ -81,7 +81,6 @@ def cubic_bezier(p0, p1, p2, p3, t):
 
         coords.append(num)
 
-    print(coords)
     return tuple(coords)
 
 
@@ -139,9 +138,6 @@ def main():
 
         if new_dot not in dots:
             dots.append(new_dot)
-
-        else:
-            print(dots)
 
         prev = dots[0]
         for dot in dots:

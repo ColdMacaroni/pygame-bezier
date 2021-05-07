@@ -2,6 +2,8 @@
 # Draw bezier curves
 #
 import math
+import time
+
 import pygame
 
 
@@ -105,13 +107,13 @@ def main():
     screen = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
 
-    norm_points = [(-2, 0),
-              (-1, 1),
-              (1, 1),
-              (2, 0)]
+    raw_points = [[(67.604009, 83.979588), (71.96352800000001, 46.407509000000005), (92.55386800000001, 83.600739), (99.074368, 83.600739)], [(99.074368, 83.600739), (105.59487, 83.600739), (115.51908, 57.304534000000004), (123.34958, 84.431239)], [(123.34958, 84.431239), (131.18009, 111.55795), (102.7013, 117.89734000000001), (96.675746, 101.04878000000001)], [(96.675746, 101.04878000000001), (90.650191, 84.20021000000001), (89.347407, 114.83774000000001), (76.915239, 112.31258000000001)], [(76.915239, 112.31258000000001), (64.48307199999999, 109.78742000000001), (67.604009, 83.979588), (67.604009, 83.979588)]]
 
     # Make em big
-    points = [tuple(map(lambda x: x*50, y)) for y in norm_points]
+    factor = 2
+    norm_points = []
+    for point in raw_points:
+        norm_points.append([(y[0] * factor, y[1] * -factor) for y in point])
 
     dots = []
 
@@ -134,16 +136,17 @@ def main():
         pygame.draw.line(screen, color['light_gray'], xy(0, height / 2), xy(0, -height / 2))
 
         # Calculate position
-        new_dot = tuple(map(lambda x: round(x, 2), cubic_bezier(*points, t)))
+        for points in norm_points:
+            new_dot = tuple(map(lambda x: round(x, 2), cubic_bezier(*points, t)))
 
-        if new_dot not in dots:
-            dots.append(new_dot)
+            if new_dot not in dots:
+                dots.append(new_dot)
 
         prev = dots[0]
         for dot in dots:
             draw_dot(screen, xy(*dot), color['blue'], 1)
 
-            pygame.draw.line(screen, color['green'], xy(*prev), xy(*dot), 1)
+            # pygame.draw.line(screen, color['green'], xy(*prev), xy(*dot), 1)
 
             prev = dot
 

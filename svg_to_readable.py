@@ -21,8 +21,6 @@ def get_nums():
         del values[1]
         check += 1
 
-    print(values)
-
     letters = 0
     for item in values:
         if item.isalpha():
@@ -47,11 +45,19 @@ def svg_str_to_tuple(str_list):
     return new_list
 
 
+
+
 def main():
-    print(1)
     txt_list = get_nums()
     coord_list = svg_str_to_tuple(txt_list)
 
+    if not len(coord_list) - 1 % 3:
+        # If the lenght of the list -1 isnt a multiple of three:
+        raise Exception('Make sure the input is a relative cubic bezier')
+
+    first_coord, *rest = coord_list
+
+    print(first_coord, rest)
     # Split the list into sections of 3, expect for the first which will be of 4.
     # then on each section of 3 insert at the start the last item of the last section
     # Add the coordinates of the last item to the other 3 in the section

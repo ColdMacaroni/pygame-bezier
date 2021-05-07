@@ -7,7 +7,7 @@ from sys import argv
 
 def get_nums():
     if len(argv) == 1:
-        text = input("Pasted the contents inside of the d attribute of path: ")
+        text = input("Paste the contents inside of the d attribute of path: ")
 
     else:
         # Read the contents of the file

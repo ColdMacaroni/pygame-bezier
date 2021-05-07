@@ -79,7 +79,7 @@ def convert_to_absolute(first, points):
     for point in points:
         # Point will look like [(x,y), (x,y), (x,y)]
         # Starting point
-        new_points = [].append(prev)
+        new_points = [prev]
 
         # Add the value of the previous point to the coordinates
         new_points += [(coord[0] + prev[0], coord[1] + prev[1]) for coord in point]

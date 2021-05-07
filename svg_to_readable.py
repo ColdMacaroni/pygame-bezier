@@ -45,6 +45,50 @@ def svg_str_to_tuple(str_list):
     return new_list
 
 
+def make_sections(ls, size, spaces=None):
+    """
+    splits list with sections of determined size
+    fills in with spaces if keyword is given
+    """
+    new_list = []
+
+    # Remove from list
+    while len(ls) >= size:
+        new_list.append(ls[:size])
+        del ls[:size]
+
+    # Check if there are any leftovers
+    if len(ls):
+        if spaces != None:
+            # Add amount of spaces needed to fulfill size
+            for i in range(size - len(ls)):
+                ls.append(spaces)
+        # Add leftovers
+        new_list.append(ls)
+
+    return new_list
+
+
+def convert_to_absolute(first, points):
+    """
+    Converts a list of relative coordinates for a cubic
+    bezier curve into absolute coordinates
+    """
+    coords = []
+    prev = first
+    for point in points:
+        # Point will look like [(x,y), (x,y), (x,y)]
+        # Starting point
+        new_points = [].append(prev)
+
+        # Add the value of the previous point to the coordinates
+        new_points += [(coord[0] + prev[0], coord[1] + prev[1]) for coord in point]
+
+        coords.append(new_points)
+
+        prev = new_points[-1]
+
+    return coords
 
 
 def main():
@@ -57,7 +101,14 @@ def main():
 
     first_coord, *rest = coord_list
 
-    print(first_coord, rest)
+    # Split the list into sections of three
+    extra_coords = make_sections(rest.copy(), 3)
+
+    bezier_coords = convert_to_absolute(first_coord, extra_coords)
+
+    print(bezier_coords)
+
+
     # Split the list into sections of 3, expect for the first which will be of 4.
     # then on each section of 3 insert at the start the last item of the last section
     # Add the coordinates of the last item to the other 3 in the section

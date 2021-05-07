@@ -2,13 +2,24 @@
 # This script will take an svg file and output its path in a format
 # that draw_bezier can read.
 
+from sys import argv
+
+
 def get_nums():
-    text = input("Pasted the contents inside of the d attribute of path: ")
+    if len(argv) == 1:
+        text = input("Pasted the contents inside of the d attribute of path: ")
+
+    else:
+        # Read the contents of the file
+        with open(argv[1], 'r') as file:
+            text = file.readlines()
+
+        text = ' '.join(text)
 
     values = text.split()
 
+    # Quick checks to see if the file is in the correct format
     check = 0
-
     if values[0] == 'm':
         del values[0]
         check += 1
@@ -106,15 +117,8 @@ def main():
 
     bezier_coords = convert_to_absolute(first_coord, extra_coords)
 
+    print()
     print(bezier_coords)
-
-
-    # Split the list into sections of 3, expect for the first which will be of 4.
-    # then on each section of 3 insert at the start the last item of the last section
-    # Add the coordinates of the last item to the other 3 in the section
-    # Rinse and repeat
-    # Should be enough for the other .py to work
-
 
 if __name__ == "__main__":
     main()

@@ -23,7 +23,7 @@ def cubic_bezier(p0, p1, p2, p3, t):
 def generate_points(control_points):
     points = []
 
-    increment = 0.05
+    increment = 0.1
     t = -increment
     while t <= 1:
         points.append(cubic_bezier(*control_points, t))
@@ -38,9 +38,7 @@ def separate_xy(ls):
     y = []
     for x1, y1 in ls:
         x.append(x1)
-
-        # Flip y due to svgs being upside down
-        y.append(y1 * -1)
+        y.append(y1)
 
     return x, y
 
@@ -53,6 +51,8 @@ def main(control_points):
     points = []
     for curve in control_points:
         points += generate_points(curve)
+
+    print(points)
 
     x_points, y_points = separate_xy(points)
 

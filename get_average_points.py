@@ -19,6 +19,7 @@ def cubic_bezier(p0, p1, p2, p3, t):
 
     return tuple(coords)
 
+
 def generate_points(control_points):
     points = []
 
@@ -33,11 +34,19 @@ def generate_points(control_points):
 
 
 def separate_xy(ls):
-    pass
+    x = []
+    y = []
+    for x1, y1 in ls:
+        x.append(x1)
+
+        # Flip y due to svgs being upside down
+        y.append(y1 * -1)
+
+    return x, y
 
 
 def average_list(ls):
-    pass
+    return sum(ls) / len(ls)
 
 
 def main(control_points):
@@ -45,7 +54,12 @@ def main(control_points):
     for curve in control_points:
         points += generate_points(curve)
 
-    print(points)
+    x_points, y_points = separate_xy(points)
+
+    avg_pt = average_list(x_points), average_list(y_points)
+
+    # Multiply y by -1 due to svg being flipped
+    return avg_pt
 
 
 if __name__ == "__main__":
@@ -70,4 +84,4 @@ if __name__ == "__main__":
                    (-22.777549999999998, -8.283880000000003), (-18.48756, -5.400100000000004)],
                   [(-18.48756, -5.400100000000004), (-14.197569999999999, -2.516320000000004),
                    (-5.773999999999999, 9.133679999999996), (0.0, 2.9999999996199733e-05)]]
-    main(cps)
+    print(main(cps))

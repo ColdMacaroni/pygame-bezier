@@ -38,7 +38,7 @@ def separate_xy(ls):
     y = []
     for x1, y1 in ls:
         x.append(x1)
-        y.append(y1)
+        y.append(y1 * -1)
 
     return x, y
 
@@ -47,14 +47,15 @@ def average_list(ls):
     return sum(ls) / len(ls)
 
 
-def main(control_points):
+def main(control_points, show_points=False):
     points = []
     for curve in control_points:
         points += generate_points(curve)
 
-    print(points)
-
     x_points, y_points = separate_xy(points)
+
+    if show_points:
+        print(list(zip(x_points, y_points)))
 
     avg_pt = average_list(x_points), average_list(y_points)
 
@@ -84,4 +85,4 @@ if __name__ == "__main__":
                    (-22.777549999999998, -8.283880000000003), (-18.48756, -5.400100000000004)],
                   [(-18.48756, -5.400100000000004), (-14.197569999999999, -2.516320000000004),
                    (-5.773999999999999, 9.133679999999996), (0.0, 2.9999999996199733e-05)]]
-    print(main(cps))
+    print(main(cps, True))
